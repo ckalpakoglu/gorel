@@ -18,7 +18,7 @@ archives:
       darwin: Darwin
       linux: Linux
       windows: Windows
-      386: i386
+      #386: i386
       amd64: x86_64
 checksum:
   name_template: 'checksums.txt'
@@ -30,3 +30,8 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
+signs:
+  - cmd: cosign
+    stdin: '{{ .Env.COSIGN_PWD }}'
+    args: ["sign-blob", "-key=cosign.key", "-output=${signature}", "${artifacts}"]
+    artifacts: all
